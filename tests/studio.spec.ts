@@ -287,7 +287,10 @@ test("keeps WAV available when the browser cannot encode MP4", async ({
   await expect(
     page.getByText("MP4 export isn’t supported in this browser."),
   ).toBeVisible();
-  await expect(page.getByRole("option", { name: /MP4/ })).toBeDisabled();
+  await expect(page.getByRole("option", { name: /MP4/ })).toHaveJSProperty(
+    "disabled",
+    true,
+  );
   await importTone(page);
   expect((await exportWav(page)).frequency).toBeGreaterThan(435);
 });
